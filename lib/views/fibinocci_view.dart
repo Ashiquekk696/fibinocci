@@ -1,6 +1,6 @@
-import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import '../controllers/fibinocci_controller.dart';
 
 class FibanocciView extends StatelessWidget {
@@ -8,10 +8,10 @@ class FibanocciView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     FibinocciController fibonacciController = Get.put(FibinocciController());
-    TextEditingController textEditingController = TextEditingController();
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Fibinocci App'),
+        title: Text('Fibonocci App'),
       ),
       body: Padding(
         padding: EdgeInsets.all(20.0),
@@ -25,31 +25,29 @@ class FibanocciView extends StatelessWidget {
             SizedBox(height: 10),
             TextField(
               keyboardType: TextInputType.number,
-              controller: textEditingController,
+              controller: fibonacciController.textEditingController,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: 'Type the number here',
               ),
             ),
             SizedBox(height: 20),
-            Text(fibonacciController.aa.value),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    fibonacciController.fib(
+                    fibonacciController.findMyFibinocci(
                         BigInt.parse("0"), BigInt.parse("1"), 1,
-                        d: textEditingController.text);
+                        d: fibonacciController.textEditingController.text);
                   },
                   child: Text('Submit'),
                 ),
               ],
             ),
-            Text("Fibinocci Valuee ${textEditingController.text}"),
-            Obx(() => Text(fibonacciController.aa!=null
-                ? fibonacciController.aa.value.toString()
-                : "g"))
+            Obx(() => Text("Fibanocci Value : ${fibonacciController.fibinocciValue != null
+                ? fibonacciController.fibinocciValue.value.toString()
+                : "0"}" ))
           ],
         ),
       ),

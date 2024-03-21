@@ -10,26 +10,31 @@ class FibinocciController extends GetxController {
   @override
   void onInit() {
     // TODO: implement onInit
-    super.onInit(); 
+    super.onInit();
   }
 
- late var fibonacciValue = BigInt.zero.obs;
-  late Rx<BigInt> bigdata; 
-  RxList<BigInt>bigData=<BigInt>[].obs;
-  late var aa ="".obs;
- fib( BigInt x, BigInt y, c, {d}) {
-  if (c <= num.parse(d)) {
-    BigInt z = x + y;
-    c++;
-   fib(y, z, c, d: d);
-   print("y ${y}");
-   bigData.value.add(y);
-   aa.value = bigData.first.toString();
-  fibonacciValue.value= y;
-   print("my a ${bigData.first}");
+  TextEditingController textEditingController = TextEditingController();
+
+  late Rx<BigInt> bigdata;
+  RxList<BigInt> bigData = <BigInt>[].obs;
+  late var fibinocciValue = "".obs;
+  findMyFibinocci(BigInt x, BigInt y, c, {d}) {
+    bigData.value.clear();
+    fibinocci(x, y, c, d: d);
+    print(bigData.length);
   }
-  
- update();}
 
-
+  fibinocci(BigInt x, BigInt y, c, {d}) {
+    if (c <= num.parse(d)) {
+      BigInt z = x + y;
+      c++;
+      fibinocci(y, z, c, d: d);
+      print("y ${y}");
+      bigData.value.add(y);
+    }
+    if (bigData.value.isNotEmpty) {
+      fibinocciValue.value = bigData.value.first.toString();
+    }
+    update();
+  }
 }
