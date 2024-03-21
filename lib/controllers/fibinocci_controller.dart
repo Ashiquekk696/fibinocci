@@ -18,19 +18,25 @@ class FibinocciController extends GetxController {
   late Rx<BigInt> bigdata;
   RxList<BigInt> bigData = <BigInt>[].obs;
   late var fibinocciValue = "".obs;
-  findMyFibinocci(BigInt x, BigInt y, c, {d}) {
+  late var isLoading = false.obs;
+  Future<void> findMyFibinocci(BigInt x, BigInt y, c, {d}) async {
+    isLoading.value = true;
     bigData.value.clear();
-    fibinocci(x, y, c, d: d);
+    await fibinocci(x, y, c, d: d);
+
     print(bigData.length);
+
+    isLoading.value = false;
   }
 
-  fibinocci(BigInt x, BigInt y, c, {d}) {
+  Future<void> fibinocci(BigInt x, BigInt y, c, {d}) async {
     if (c <= num.parse(d)) {
       BigInt z = x + y;
       c++;
-      fibinocci(y, z, c, d: d);
-      print("y ${y}");
+      await fibinocci(y, z, c, d: d);
+      
       bigData.value.add(y);
+      print("y ${y}");
     }
     if (bigData.value.isNotEmpty) {
       fibinocciValue.value = bigData.value.first.toString();

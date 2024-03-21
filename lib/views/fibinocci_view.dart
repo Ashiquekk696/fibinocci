@@ -5,10 +5,10 @@ import '../controllers/fibinocci_controller.dart';
 
 class FibanocciView extends StatelessWidget {
   FibanocciView({super.key});
-  @override
-  Widget build(BuildContext context) {
-    FibinocciController fibonacciController = Get.put(FibinocciController());
+      FibinocciController fibonacciController = Get.put(FibinocciController());
 
+  @override
+  Widget build(BuildContext context) { 
     return Scaffold(
       appBar: AppBar(
         title: Text('Fibonocci App'),
@@ -36,18 +36,21 @@ class FibanocciView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  onPressed: () {
-                    fibonacciController.findMyFibinocci(
+                  onPressed: ()async {
+                  await  fibonacciController.findMyFibinocci(
                         BigInt.parse("0"), BigInt.parse("1"), 1,
                         d: fibonacciController.textEditingController.text);
                   },
                   child: Text('Submit'),
                 ),
               ],
-            ),
-            Obx(() => Text("Fibanocci Value : ${fibonacciController.fibinocciValue != null
-                ? fibonacciController.fibinocciValue.value.toString()
-                : "0"}" ))
+            ), 
+            Obx(() {
+              return  
+              Text(
+                  "Fibanocci Value : ${fibonacciController.fibinocciValue != null ?
+                   fibonacciController.fibinocciValue.value.toString() : "0"}");
+            })
           ],
         ),
       ),
